@@ -31,6 +31,8 @@ protected:
 public:
 	CScrollBarEx m_sbTest1;
 	CScrollBarEx m_sbTest2;
+	CScrollBarEx *m_psbTest3;
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnDestroy();
 };

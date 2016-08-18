@@ -21,6 +21,7 @@ CFTech_ScrollbarExDlg::CFTech_ScrollbarExDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CFTech_ScrollbarExDlg::IDD, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_psbTest3 = NULL;
 }
 
 void CFTech_ScrollbarExDlg::DoDataExchange(CDataExchange* pDX)
@@ -35,6 +36,7 @@ BEGIN_MESSAGE_MAP(CFTech_ScrollbarExDlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_WM_HSCROLL()
 	ON_WM_VSCROLL()
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 
@@ -48,6 +50,11 @@ BOOL CFTech_ScrollbarExDlg::OnInitDialog()
 	//  when the application's main window is not a dialog
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
+
+	m_psbTest3 = new CScrollBarEx();
+	m_psbTest3->CreateContol(this,true,CRect(10,100,200,20),2020);
+	m_psbTest3->SetScrollRange(0,100);
+	SetDlgItemInt(IDC_LbInfo3,0);
 
 	m_sbTest1.InitControl(this);
 	m_sbTest1.SetScrollRange(0,100);
@@ -111,6 +118,12 @@ void CFTech_ScrollbarExDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScro
 		SetDlgItemInt(IDC_LbInfo1,pos);
 	}
 
+	if (pScrollBar->m_hWnd == m_psbTest3->m_hWnd)
+	{
+		int pos = m_psbTest3->GetScrollPos();
+		SetDlgItemInt(IDC_LbInfo3,pos);
+	}
+
 	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
 }
 
@@ -124,4 +137,17 @@ void CFTech_ScrollbarExDlg::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScro
 	}
 
 	CDialogEx::OnVScroll(nSBCode, nPos, pScrollBar);
+}
+
+
+void CFTech_ScrollbarExDlg::OnDestroy()
+{
+	CDialogEx::OnDestroy();
+
+	if (m_psbTest3 != NULL)
+	{
+		m_psbTest3->DestroyWindow();
+		delete m_psbTest3;
+		m_psbTest3 = NULL;
+	}
 }

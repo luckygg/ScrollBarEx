@@ -16,7 +16,7 @@
 #define SIZE_HEIGHT 20
 // CScrollBarEx
 
-class CScrollBarEx : public CWnd
+class CScrollBarEx : public CScrollBar
 {
 	DECLARE_DYNAMIC(CScrollBarEx)
 
@@ -25,6 +25,9 @@ public:
 	virtual ~CScrollBarEx();
 
 public :
+	//----- Dynamic Create Control -----//
+	BOOL CreateContol(CWnd* pWnd, bool bHorizontal, CRect rcSize, UINT ID);
+
 	//----- Init Control -----//
 	BOOL InitControl(CWnd* pWnd, bool bHorizontal = true);
 

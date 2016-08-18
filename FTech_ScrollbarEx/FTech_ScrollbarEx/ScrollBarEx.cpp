@@ -6,7 +6,7 @@
 
 // CScrollBarEx
 
-IMPLEMENT_DYNAMIC(CScrollBarEx, CWnd)
+IMPLEMENT_DYNAMIC(CScrollBarEx, CScrollBar)
 
 CScrollBarEx::CScrollBarEx()
 {
@@ -68,7 +68,7 @@ CScrollBarEx::~CScrollBarEx()
 	OnDeleteBitmaps();
 }
 
-BEGIN_MESSAGE_MAP(CScrollBarEx, CWnd)
+BEGIN_MESSAGE_MAP(CScrollBarEx, CScrollBar)
 	ON_WM_ERASEBKGND()
 	ON_WM_PAINT()
 	ON_WM_LBUTTONDOWN()
@@ -137,6 +137,17 @@ void CScrollBarEx::OnDeleteBitmaps()
 		delete m_pBmpUpArrowHi;
 		m_pBmpUpArrowHi = NULL;
 	}
+}
+
+BOOL CScrollBarEx::CreateContol(CWnd* pWnd, bool bHorizontal, CRect rcSize, UINT ID)
+{
+	if (pWnd == NULL) return false;
+
+	DWORD dwStyle = WS_CHILD | WS_VISIBLE | WS_TABSTOP;
+
+	bHorizontal ? dwStyle |= SBS_HORZ : dwStyle |= SBS_VERT ;
+
+	return CreateFromWindow(dwStyle,pWnd,rcSize,ID);
 }
 
 BOOL CScrollBarEx::InitControl(CWnd* pWnd, bool bHorizontal)
